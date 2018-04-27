@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<beans:beans xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans" xmlns="http://www.springframework.org/schema/security">
+    <!-- We will be defining all security related configurations in this file -->
+    <http pattern="/login" security="none"/>
+    <http pattern="/register" security="none"/>
+    <http use-expressions="true">
+
+
+
+        <intercept-url access="isAuthenticated()" pattern="/"/>
+        <intercept-url access="hasRole('Admin')" pattern="/**" />
+        <intercept-url access="hasRole('ENS')" pattern="/Ens/**" />
+        <intercept-url access="hasRole('CUN')" pattern="/CUN/**" />
+        <intercept-url access="hasRole('ADM')" pattern="/Administration/**" />
+
+
+
+
+        <!-- this means all URL in this app will be checked if user is authenticated -->
+        <form-login login-page="/login" default-target-url="/" always-use-default-target="true" authentication-failure-url="/login"/>
+        <!-- We will just use the built-in form login page in Spring -->
+        <logout logout-success-url="/index" logout-url="/logout"/>
+
+        <!-- the logout url we will use in JSP -->
+    </http>
+    <!-- <authentication-manager> <authentication-provider> <user-service> <user name="joseph" password="bagnes" authorities="Admin, User"/> <user name="bernabe" password="jose" authorities="User"/> </user-service> </authentication-provider> </authentication-manager> -->
+    <beans:bean class="org.springframework.security.authentication.dao.DaoAuthenticationProvider" id="daoAuthenticationProvider">
+        <beans:property ref="userDetailsService" name="userDetailsService"/>
+
+    </beans:bean>
+
+    <beans:bean id="encoder"
+                class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+    </beans:bean>
+
+
+    <beans:bean id="authenticationManager"
+          class="org.springframework.security.authentication.ProviderManager">
+        <beans:constructor-arg>
+            <beans:list>
+                <beans:ref bean="daoAuthenticationProvider" />
+
+            </beans:list>
+        </beans:constructor-arg>
+    </beans:bean>
+
+
+    <authentication-manager>
+        <authentication-provider user-service-ref="userDetailsService">
+            <password-encoder hash="md5" />
+        </authentication-provider>
+    </authentication-manager>
+</beans:beans>
