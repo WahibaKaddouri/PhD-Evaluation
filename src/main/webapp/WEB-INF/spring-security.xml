@@ -10,7 +10,7 @@
         <intercept-url access="isAuthenticated()" pattern="/"/>
         <intercept-url access="hasRole('Admin')" pattern="/**" />
         <intercept-url access="hasRole('ENS')" pattern="/Ens/**" />
-        <intercept-url access="hasRole('CUN')" pattern="/CUN/**" />
+        <intercept-url access="hasRole('CUN')" pattern="/CUN/**" />dd
         <intercept-url access="hasRole('ADM')" pattern="/Administration/**" />
 
 
