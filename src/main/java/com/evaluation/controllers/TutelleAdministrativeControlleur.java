@@ -1,12 +1,14 @@
 package com.evaluation.controllers;
 
 import com.evaluation.models.Enseignant;
+import com.evaluation.models.Fichier;
 import com.evaluation.models.Section;
-import com.evaluation.services.EnseignantServiceImpl;
-import com.evaluation.services.EtablissementServiceImpl;
-import com.evaluation.services.EvaluationServiceImpl;
-import com.evaluation.services.SectionServiceImpl;
+import com.evaluation.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
+@Controller
 public class TutelleAdministrativeControlleur {
 
 
@@ -34,20 +38,40 @@ public class TutelleAdministrativeControlleur {
     private EvaluationServiceImpl EvaluationService;
 
     @Autowired
+    private UserServiceImpl UserService;
+
+    @Autowired
     ServletContext context;
 
     @RequestMapping(value = "/Administration", method = RequestMethod.GET)
     public String AcceuilCun2(ModelMap model){
         List<Section> sections = SectionService.getAllSection();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+
+            System.out.println(UserService.getEtablissementUser());
+           String etablissement = UserService.getEtablissementUser();
+
+            model.addAttribute ("etablissement", etablissement);
+        }
         model.addAttribute ("section", sections);
+
         return ("Accueil_CUN2");
     }
 
-    @RequestMapping(value = "/Administration/Listecandidat/{section}", method = RequestMethod.GET)
-    public String ShowList2(@PathVariable("section") int section, ModelMap model){
-        List<Enseignant> listes = EnseignantService.getEnseignantBySection(section);
-        model.addAttribute("liste", listes);
-        model.addAttribute("izri", section);
+    @RequestMapping(value = "/Administration/Listecandidat/", method = RequestMethod.GET)
+    public String ShowList2( ModelMap model){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+
+            String etablissement = UserService.getEtablissementUser();
+            List<Enseignant> listes = EnseignantService.getAllEnsEtablissement(etablissement);
+            model.addAttribute ("etablissement", etablissement);
+            model.addAttribute("liste", listes);
+        }
+
+
         return ("Liste_Candidats2");
 
     }
