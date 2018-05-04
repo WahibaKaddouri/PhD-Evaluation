@@ -340,7 +340,7 @@
                     $.ajax({
                         type : 'POST',
                         contentType: "application/json; charset=utf-8",
-                        url : '/CUN/Evaluation/Encadrement/${ens.getId()}',
+                        url : '/CUN/Evaluation/ProductionScientifiques/${ens.getId()}',
                         dataType : "json",
                         data : JSON.stringify(data),
                         success : function(data) {

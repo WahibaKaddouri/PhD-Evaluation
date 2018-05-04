@@ -288,7 +288,7 @@
         $.ajax({
             type : 'POST',
             contentType: "application/json; charset=utf-8",
-            url : '/CUN/Evaluation/${ens.getId()}',
+            url : '/CUN/Evaluation/Encadrement/${ens.getId()}',
             dataType : "json",
             data : JSON.stringify(data),
             success : function(data) {
