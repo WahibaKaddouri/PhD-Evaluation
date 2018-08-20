@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class FichierServiceImpl implements  FichierService {
+public class FichierServiceImpl implements FichierService {
 
     @Autowired
     FichierDAOImpl FichierDAO;
@@ -15,4 +15,6 @@ public class FichierServiceImpl implements  FichierService {
         FichierDAO.addFichier(fichier);
 
     }
+    public void supprFichier(Fichier file){FichierDAO.supprFichier(file);}
+
 }

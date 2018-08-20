@@ -1,11 +1,11 @@
 package com.evaluation.services;
 
 import com.evaluation.DAO.ActivitePedDAO;
-import com.evaluation.DAO.EnseignantDAO;
 import com.evaluation.models.Activité_Pédagogique;
-import com.evaluation.models.Enseignant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
@@ -24,5 +24,14 @@ public class ActivitePedServiceImpl implements ActivitePedService {
         APDAO.saveActivitePed(ap);
 
     }
+
+    public List<Activité_Pédagogique> getEnseignementbyIdEns(int IdEns){
+        return APDAO.getEnseignementbyIdEns(IdEns);
+    }
+
+    public void supprActivite(int id_actP) {
+        APDAO.supprActivite(id_actP);
+    }
+    public void updateActivitePed(Activité_Pédagogique ap){APDAO.updateActivitePed(ap);}
 
 }

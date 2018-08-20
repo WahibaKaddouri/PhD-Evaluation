@@ -5,6 +5,8 @@ import com.evaluation.models.Projet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class ProjetServiceImpl implements ProjetService {
@@ -22,5 +24,9 @@ public class ProjetServiceImpl implements ProjetService {
         p.saveProjet(pro);
 
     }
+
+    public void supprProjet(int id_pro){p.supprProjet(id_pro);}
+    public List<Projet> getProjetbyIdEns(int IdEns){return p.getProjetbyIdEns(IdEns);}
+    public void UpdateProjet(Projet pro){p.UpdateProjet(pro);}
 
 }

@@ -26,5 +26,8 @@ public class OuvrageServiceImpl implements OuvrageService {
     }
 
     public List<Ouvrage> getOuvragebyIdEns(int IdEns){return o.getOuvragebyIdEns(IdEns);}
+    public void supprOuvrage(int id_ouv){o.supprOuvrage(id_ouv);}
+
+    public void UpdateOuvrage(Ouvrage ouv){o.UpdateOuvrage(ouv);}
 
 }

@@ -38,6 +38,24 @@ public class CommunicationDAOImpl implements CommunicationDAO {
         }
     }
 
+
+    public void UpdateCommunication(Communication com) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        if(com!=null){
+            try {
+                session.update(com);
+                tx.commit();
+                session.close();
+            } catch (Exception e) {
+                tx.rollback();
+                session.close();
+                e.printStackTrace();
+            }
+        }
+    }
+
+
     public List<Communication> getCommunicationbyIdEns(int IdEns) {
         Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
@@ -56,6 +74,28 @@ public class CommunicationDAOImpl implements CommunicationDAO {
             e.printStackTrace();
             List<Communication> list = null;
             return list;
+        }
+    }
+
+
+    public void supprCommunication(int id_com) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        try {
+            Query query = session.createQuery("FROM com.evaluation.models.Communication as ap  WHERE ap.id_com =: IdC");
+            query.setParameter("IdC", id_com);
+            List<Communication> list = query.list();
+            for (Communication a: list){
+                session.delete(a);
+            }
+            tx.commit();
+            session.close();
+        }
+        catch (Exception e){
+            tx.rollback();
+            session.close();
+            e.printStackTrace();
+
         }
     }
 

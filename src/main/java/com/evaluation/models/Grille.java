@@ -14,6 +14,8 @@ public class Grille {
     private int id_grille;
     @Column
     private int noteFinale;
+    @Column
+    private String observation;
     @OneToMany(mappedBy="grille")
     private Set<Variable> variable;
     @OneToOne
@@ -29,6 +31,21 @@ public class Grille {
         this.noteFinale = noteFinale;
         this.variable = variable;
         this.ens_id = ens_id;
+    }
+
+    public Grille(int noteFinale, String observation, Set<Variable> variable, Enseignant ens_id) {
+        this.noteFinale = noteFinale;
+        this.observation = observation;
+        this.variable = variable;
+        this.ens_id = ens_id;
+    }
+
+    public String getObservation() {
+        return observation;
+    }
+
+    public void setObservation(String observation) {
+        this.observation = observation;
     }
 
     public int getId_grille() {

@@ -42,6 +42,24 @@ public class OuvrageDAOImpl implements OuvrageDAO {
         }
     }
 
+    public void UpdateOuvrage(Ouvrage o) {
+
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        if(o!=null){
+            try {
+
+                session.update(o);
+                tx.commit();
+                session.close();
+            } catch (Exception e) {
+                tx.rollback();
+                session.close();
+                e.printStackTrace();
+            }
+        }
+    }
+
     public List<Ouvrage> getOuvragebyIdEns(int IdEns) {
         Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
@@ -60,6 +78,27 @@ public class OuvrageDAOImpl implements OuvrageDAO {
             e.printStackTrace();
             List<Ouvrage> list = null;
             return list;
+        }
+    }
+
+    public void supprOuvrage(int id_ouv) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        try {
+            Query query = session.createQuery("FROM com.evaluation.models.Ouvrage as ap  WHERE ap.id_ouv =: IdE");
+            query.setParameter("IdE", id_ouv);
+            List<Ouvrage> list = query.list();
+            for (Ouvrage a: list){
+                session.delete(a);
+            }
+            tx.commit();
+            session.close();
+        }
+        catch (Exception e){
+            tx.rollback();
+            session.close();
+            e.printStackTrace();
+
         }
     }
 }

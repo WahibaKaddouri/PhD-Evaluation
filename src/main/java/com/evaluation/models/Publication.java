@@ -49,6 +49,18 @@ public class Publication {
         this.url = url;
     }
 
+    public Publication(int id_pub, int code_ens, String type, String titre_article, String position_auteur, String titre_revue, int annee, String url) {
+        this.id_pub=id_pub;
+        this.code_ens = code_ens;
+        this.type = type;
+        this.titre_article = titre_article;
+        this.position_auteur = position_auteur;
+        this.titre_revue = titre_revue;
+        this.annee = annee;
+        this.url = url;
+    }
+
+
 
     public int getId_pub() {
         return id_pub;

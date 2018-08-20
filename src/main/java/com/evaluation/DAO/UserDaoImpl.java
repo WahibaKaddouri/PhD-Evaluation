@@ -22,7 +22,20 @@ public class UserDaoImpl implements UserDao {
 	
 
 	public void addUser(Utilisateur user) {
-		sessionFactory.getCurrentSession().save(user);
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        if(user!=null){
+            try {
+				user.setPassword("dfa0c63e57a8fd8423df66af57020670");
+                session.save(user);
+                tx.commit();
+                session.close();
+            } catch (Exception e) {
+                tx.rollback();
+                session.close();
+                e.printStackTrace();
+            }
+        }
 	}
 
 
@@ -32,12 +45,21 @@ public class UserDaoImpl implements UserDao {
 
 
 	public void deleteUser(int userId) {
-		sessionFactory.getCurrentSession().delete(findUser(userId));
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        session.delete(findUser(userId));
+        tx.commit();
+        session.close();
 	}
 
 
 	public Utilisateur findUser(int userId) {
-		return (Utilisateur) sessionFactory.getCurrentSession().get(Utilisateur.class, userId);
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		Utilisateur u = (Utilisateur) session.get(Utilisateur.class, userId);
+		tx.commit();
+		session.close();
+		return u;
 	}
 
 
@@ -58,10 +80,23 @@ public class UserDaoImpl implements UserDao {
 
 
 	public List<Utilisateur> getAllUsers() {
-		return sessionFactory.getCurrentSession().createQuery("from User").list();
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		try {
+			Query query = session.createQuery("FROM Utilisateur");
+			List<Utilisateur> list = query.list();
+			tx.commit();
+			session.close();
+			return list;
+		} catch (Exception e) {
+			tx.rollback();
+			session.close();
+			e.printStackTrace();
+			List<Utilisateur> list = null;
+			return list;
+		}
+
 	}
-
-
     public String getEtablissementUser(){
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -90,5 +125,34 @@ public class UserDaoImpl implements UserDao {
 
 
     }
+
+	public String getUserRole(){
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+			String currentUserName = authentication.getName();
+
+			Session session = sessionFactory.openSession();
+			Transaction tx = session.beginTransaction();
+			try {
+				Query query = session.createQuery("FROM Utilisateur  WHERE username=:UserName" );
+				query.setParameter("UserName", currentUserName);
+				Utilisateur user = (Utilisateur) query.getSingleResult();
+				tx.commit();
+				session.close();
+				return user.getRoles();
+			}
+			catch (Exception e){
+				tx.rollback();
+				session.close();
+				e.printStackTrace();
+				return null;
+			}
+
+		}
+		else {return null;}
+
+
+	}
 
 }

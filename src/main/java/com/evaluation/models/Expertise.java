@@ -35,6 +35,15 @@ public class Expertise {
         this.annee = annee;
     }
 
+    public Expertise(int id_exp, int code_ens, String contexte, String organisme, int annee) {
+        this.id_exp=id_exp;
+        this.code_ens = code_ens;
+        this.contexte = contexte;
+        this.organisme = organisme;
+        this.annee = annee;
+    }
+
+
 
     public int getId_exp() {
         return id_exp;

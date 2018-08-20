@@ -1,9 +1,6 @@
 package com.evaluation.DAO;
 
-import com.evaluation.models.Enseignant;
-import com.evaluation.models.Grille;
-import com.evaluation.models.SousVariable;
-import com.evaluation.models.Variable;
+import com.evaluation.models.*;
 
 import java.util.List;
 
@@ -20,5 +17,9 @@ public  interface EvaluationDAO {
     int getNbrPointsTotalSV (Variable V);
     void setNbrPointsTotalSV (Variable V);
     Variable getVariableUniqueGrille(String variable, Grille grille);
+    int getNbrPointsGrille(Grille grille);
+    void setNbrPointsObservationGrille(Grille grille);
+    void updateGrilleObservation(Grille grille, String Observation);
+    List<Enseignant> getEnsAcceptes(String Observation, int section );
 
 }

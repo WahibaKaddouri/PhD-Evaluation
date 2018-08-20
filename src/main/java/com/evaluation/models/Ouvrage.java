@@ -1,6 +1,5 @@
 package com.evaluation.models;
 
-import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 
 
@@ -52,6 +51,18 @@ public class Ouvrage {
         this.anneeE = anneeE;
     }
 
+
+
+    public Ouvrage(int id_ouv, int code_ens,String type, String titre,String auteurs, String maison, int anneeE, int nb_pages) {
+        this.id_ouv=id_ouv;
+        this.code_ens = code_ens;
+        this.auteurs = auteurs;
+        this.type = type;
+        this.titre = titre;
+        this.maison = maison;
+        this.nb_pages = nb_pages;
+        this.anneeE = anneeE;
+    }
 
     public String getType() {
         return type;

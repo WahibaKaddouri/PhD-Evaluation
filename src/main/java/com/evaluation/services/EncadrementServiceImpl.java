@@ -27,4 +27,8 @@ public class EncadrementServiceImpl implements EncadrementService {
 
     public List<Encadrement> getEncadrementbyIdEns(int IdEns){ return e.getEncadrementbyIdEns(IdEns);}
 
+    public void supprEncadrement(int id_enc){e.supprEncadrement(id_enc);}
+
+    public void UpdateEncadrement(Encadrement enc){e.UpdateEncadrement(enc);}
+
 }

@@ -37,4 +37,7 @@ public class EvaluationServiceImpl implements EvaluationService{
     public int getNbrPointsTotalSV (Variable V){return EvalDAO.getNbrPointsTotalSV(V);}
     public void setNbrPointsTotalSV (Variable V) {EvalDAO.setNbrPointsTotalSV(V);}
     public Variable getVariableUniqueGrille(String variable, Grille grille){return EvalDAO.getVariableUniqueGrille(variable,grille);}
+    public void setNbrPointsObservationGrille(Grille grille){EvalDAO.setNbrPointsObservationGrille(grille);}
+    public void updateGrilleObservation(Grille grille, String Observation){ EvalDAO.updateGrilleObservation(grille, Observation);}
+    public  List<Enseignant> getEnsAcceptes(String observation, int section ){return EvalDAO.getEnsAcceptes(observation, section);}
 }

@@ -1,5 +1,4 @@
 package com.evaluation.DAO;
-import com.evaluation.models.Activité_Pédagogique;
 import com.evaluation.models.Demande;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

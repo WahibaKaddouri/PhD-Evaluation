@@ -11,6 +11,7 @@ public interface UserDao {
 	void deleteUser(int userId);
 	Utilisateur findUser(int userId);
 	Utilisateur findUserByName(String username);
-
+	List<Utilisateur> getAllUsers();
 	String getEtablissementUser();
+	String getUserRole();
 }

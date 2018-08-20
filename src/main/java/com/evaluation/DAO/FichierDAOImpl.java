@@ -1,7 +1,6 @@
 package com.evaluation.DAO;
 
 import com.evaluation.models.Fichier;
-import com.evaluation.models.Utilisateur;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -37,5 +36,22 @@ public class FichierDAOImpl implements FichierDAO {
         }
 
 
+    }
+
+    public void supprFichier(Fichier file) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        try {
+
+            session.delete(file);
+            tx.commit();
+            session.close();
+        }
+        catch (Exception e){
+            tx.rollback();
+            session.close();
+            e.printStackTrace();
+
+        }
     }
 }

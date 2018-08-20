@@ -39,6 +39,24 @@ public class EncadrementDAOImpl implements EncadrementDAO {
         }
     }
 
+
+    public void UpdateEncadrement(Encadrement enc) {
+
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        if(enc!=null){
+            try {
+                session.update(enc);
+                tx.commit();
+                session.close();
+            } catch (Exception e) {
+                tx.rollback();
+                session.close();
+                e.printStackTrace();
+            }
+        }
+    }
+
     public List<Encadrement> getEncadrementbyIdEns(int IdEns) {
         Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
@@ -57,6 +75,30 @@ public class EncadrementDAOImpl implements EncadrementDAO {
             e.printStackTrace();
             List<Encadrement> list = null;
             return list;
+        }
+    }
+
+
+
+
+    public void supprEncadrement(int id_enc) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        try {
+            Query query = session.createQuery("FROM com.evaluation.models.Encadrement as ap  WHERE ap.id_enc =: IdE");
+            query.setParameter("IdE", id_enc);
+            List<Encadrement> list = query.list();
+            for (Encadrement a: list){
+                session.delete(a);
+            }
+            tx.commit();
+            session.close();
+        }
+        catch (Exception e){
+            tx.rollback();
+            session.close();
+            e.printStackTrace();
+
         }
     }
 

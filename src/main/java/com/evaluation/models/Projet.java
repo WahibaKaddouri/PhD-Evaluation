@@ -38,6 +38,16 @@ public class Projet {
         this.annee = annee;
     }
 
+    public Projet(int id_pro, int code_ens, String type, String qualite, String titre, int annee) {
+        this.id_pro=id_pro;
+        this.code_ens = code_ens;
+        this.type = type;
+        this.qualite = qualite;
+        this.titre = titre;
+        this.annee = annee;
+    }
+
+
 
     public int getId_pro() {
         return id_pro;

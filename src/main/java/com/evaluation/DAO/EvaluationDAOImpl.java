@@ -1,9 +1,6 @@
 package com.evaluation.DAO;
 
-import com.evaluation.models.Enseignant;
-import com.evaluation.models.Grille;
-import com.evaluation.models.SousVariable;
-import com.evaluation.models.Variable;
+import com.evaluation.models.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -12,7 +9,7 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
-import java.util.List;
+import java.util.*;
 
 @Repository
 @Transactional
@@ -197,15 +194,132 @@ public class EvaluationDAOImpl implements EvaluationDAO{
 
         Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
-
-
-
         variable.setTotal_point(getNbrPointsTotalSV(variable));
         session.update(variable);
         tx.commit();
         session.close();
 
 
+    }
+
+    public int getNbrPointsGrille(Grille grille){
+
+        int sum=0;
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        Query query = session.createQuery("FROM Variable WHERE grille=:grille");
+        query.setParameter("grille",grille);
+        try{
+            List<Variable> list = (List<Variable>)query.getResultList();
+            //getSingleResult();
+            tx.commit();
+            for (int i = 0; i < list.size(); i++) {
+                Variable v = list.get(i);
+                int varint= v.getTotal_point();
+                System.out.println(varint);
+                sum=sum+varint;
+
+            }
+
+
+            session.close();
+            return sum;
+
+        }
+        catch (Exception ex){
+            tx.rollback();
+            session.close();
+            return 0;
+
+        }
+
+
+    }
+
+    public void setNbrPointsObservationGrille(Grille grille){
+
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        grille.setNoteFinale(getNbrPointsGrille(grille));
+        session.update(grille);
+        tx.commit();
+        session.close();
+
+
+    }
+
+    public void updateGrilleObservation(Grille grille, String Observation ){
+
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        grille.setObservation(Observation);
+        session.update(grille);
+        tx.commit();
+        session.close();
+
+    }
+
+    public  List<Enseignant> getEnsAcceptes(String observation, int section ){
+
+        Session session = sessionFactory.openSession();
+        List<Enseignant> listeEns = new ArrayList();
+        int noteFinale =0;
+
+        Transaction tx = session.beginTransaction();
+        Query query = session.createQuery("FROM Grille WHERE observation=:observation");
+        Query query2 = session.createQuery("FROM Grille WHERE noteFinale=:noteFinale");
+
+        query.setParameter("observation",observation);
+        query2.setParameter("noteFinale",noteFinale);
+
+        try{
+            List<Grille> list = (List<Grille>)query.getResultList();
+            List<Grille> list2 = (List<Grille>)query2.getResultList();
+            if (list.isEmpty()) System.out.println(("viiide2"));
+            if (list2.isEmpty()) System.out.println(("viiide3"));
+            tx.commit();
+            if  (observation=="Candidatures non evaluees") {
+
+                for (int i = 0; i < list2.size(); i++) {
+                    Grille g = list2.get(i);
+                    Enseignant ens = g.getEns_id();
+                    if (ens.getId_section() == section) {
+
+                        listeEns.add(ens);
+                        System.out.println(ens.getId());
+                    }
+
+
+                }
+
+                session.close();
+                return listeEns;
+            }
+
+                else{
+                    for (int i = 0; i < list.size(); i++) {
+                        Grille g = list.get(i);
+                        Enseignant ens = g.getEns_id();
+                        if (ens.getId_section() == section) {
+
+                            listeEns.add(ens);
+                            System.out.println(ens.getId());
+                        }
+
+
+                    }
+
+                    session.close();
+                    return listeEns;
+                }
+
+
+        }
+        catch (Exception ex) {
+            tx.rollback();
+            session.close();
+            return null;
+        }
 
     }
 

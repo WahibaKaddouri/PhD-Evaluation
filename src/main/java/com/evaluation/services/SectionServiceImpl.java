@@ -1,7 +1,5 @@
 package com.evaluation.services;
 
-import com.evaluation.DAO.EtablissementDAOImpl;
-
 import com.evaluation.DAO.SectionDAOImpl;
 import com.evaluation.models.Section;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,4 +16,5 @@ public class SectionServiceImpl implements SectionService {
     public List<Section> getAllSection() {
         return SectionDAO.getAllSection();
     }
+    public int getSectionId(String section){return SectionDAO.getSectionId(section);}
 }

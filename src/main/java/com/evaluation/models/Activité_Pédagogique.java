@@ -45,6 +45,15 @@ public class Activité_Pédagogique {
         this.cycle = cycle;
     }
 
+    public Activité_Pédagogique(int id_actP, int id_ens, String annee, String module, String type_grad, String cycle) {
+        this.id_actP=id_actP;
+        this.id_ens = id_ens;
+        this.annee = annee;
+        this.module = module;
+        this.type_grad = type_grad;
+        this.cycle = cycle;
+    }
+
     public String getAnnee() {
 
         return annee;

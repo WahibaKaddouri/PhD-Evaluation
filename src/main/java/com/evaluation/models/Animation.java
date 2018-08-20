@@ -38,6 +38,16 @@ public class Animation {
         this.qualite = qualite;
     }
 
+    public Animation(int id_anim, int code_ens, String type, String lieu, String date, String qualite) {
+        this.id_anim=id_anim;
+        this.code_ens = code_ens;
+        this.type = type;
+        this.lieu = lieu;
+        this.date = date;
+        this.qualite = qualite;
+    }
+
+
 
     public int getId_anim() {
         return id_anim;

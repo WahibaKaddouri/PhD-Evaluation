@@ -26,5 +26,8 @@ public class PublicationServiceImpl implements PublicationService {
     }
 
     public List<Publication> getPublicationbyIdEns(int IdEns){return p.getPublicationbyIdEns(IdEns);}
+    public void supprPublication(int id_pub){p.supprPublication(id_pub);}
+    public void UpdatePublication(Publication pub){p.UpdatePublication(pub);}
+
 
 }

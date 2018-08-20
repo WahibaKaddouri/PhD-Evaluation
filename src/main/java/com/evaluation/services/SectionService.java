@@ -8,4 +8,5 @@ import java.util.List;
 public interface SectionService {
 
     List<Section> getAllSection() ;
+    int getSectionId(String section);
 }

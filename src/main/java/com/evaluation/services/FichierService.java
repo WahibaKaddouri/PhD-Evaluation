@@ -5,4 +5,5 @@ import com.evaluation.models.Fichier;
 public interface FichierService {
 
     public void addFichier(Fichier fichier);
+    public void supprFichier(Fichier file);
 }

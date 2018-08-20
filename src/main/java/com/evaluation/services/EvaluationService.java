@@ -19,5 +19,9 @@ public interface EvaluationService {
     public int getNbrPointsTotalSV (Variable V);
     public void setNbrPointsTotalSV (Variable V);
     public Variable getVariableUniqueGrille(String variable, Grille grille);
+    void setNbrPointsObservationGrille(Grille grille);
+    void updateGrilleObservation(Grille grille, String Observation);
+    public  List<Enseignant> getEnsAcceptes(String observation, int section);
+
 
 }

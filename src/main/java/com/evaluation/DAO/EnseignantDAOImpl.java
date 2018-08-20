@@ -1,5 +1,6 @@
 package com.evaluation.DAO;
 
+import com.evaluation.models.Dossier;
 import com.evaluation.models.Enseignant;
 import com.evaluation.models.Utilisateur;
 import org.hibernate.query.Query;
@@ -181,5 +182,142 @@ public class EnseignantDAOImpl implements EnseignantDAO {
         }
     }
 
+    public List<Enseignant> getListEnseignant() {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        try {
+            Query query = session.createQuery("SELECT a FROM Enseignant a " );
+            List<Enseignant> list = query.list();
+            tx.commit();
+            session.close();
+            return list;
+        }
+        catch (Exception e){
+            tx.rollback();
+            session.close();
+            e.printStackTrace();
+            List<Enseignant> list = null;
+            return list;
+        }
+    }
+
+    public String getENSName(){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            String currentUserName = authentication.getName();
+
+            Session session = sessionFactory.openSession();
+            Transaction tx = session.beginTransaction();
+            try {
+                Query query = session.createQuery("FROM Enseignant  WHERE email=:UserName" );
+                query.setParameter("UserName", currentUserName);
+                Enseignant ens = (Enseignant) query.getSingleResult();
+                tx.commit();
+                session.close();
+                return ens.getPrenom();
+            }
+            catch (Exception e){
+                tx.rollback();
+                session.close();
+                e.printStackTrace();
+                return "";
+            }
+
+        }
+        else {return "";}
+
+    }
+
+
+    public String getENSPrenom(){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            String currentUserName = authentication.getName();
+
+            Session session = sessionFactory.openSession();
+            Transaction tx = session.beginTransaction();
+            try {
+                Query query = session.createQuery("FROM Enseignant  WHERE email=:UserName" );
+                query.setParameter("UserName", currentUserName);
+                Enseignant ens = (Enseignant) query.getSingleResult();
+                tx.commit();
+                session.close();
+                return ens.getNom();
+            }
+            catch (Exception e){
+                tx.rollback();
+                session.close();
+                e.printStackTrace();
+                return "";
+            }
+
+        }
+        else {return "";}
+
+    }
+
+    public  void  saveDossier(Dossier dossier){
+
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+
+
+        if(dossier!=null){
+            try {
+
+                session.save(dossier);
+                tx.commit();
+                session.close();
+            } catch (Exception e) {
+                tx.rollback();
+                session.close();
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+
+    public void updateDossier(Dossier d){
+
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        d.setEtat("Dossier soumis");
+        session.update(d);
+        tx.commit();
+        session.close();
+    }
+    public Dossier getEnsDossier(int ens_id){
+
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        try {
+            Query query1 = session.createQuery("FROM Enseignant  WHERE id=:ens_id" );
+            query1.setParameter("ens_id", ens_id);
+            Enseignant ens = (Enseignant) query1.getSingleResult();
+            System.out.println(ens.getId());
+
+
+            Query query = session.createQuery("FROM Dossier  WHERE ens_id=:ens" );
+            query.setParameter("ens", ens);
+            Dossier d = (Dossier) query.getSingleResult();
+
+            System.out.println(d.getEns_id());
+            tx.commit();
+            session.close();
+            return d;
+        }
+        catch (Exception e){
+            tx.rollback();
+            session.close();
+            e.printStackTrace();
+            return null;
+        }
+
+
+
+    }
 
 }

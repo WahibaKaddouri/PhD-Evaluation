@@ -26,4 +26,8 @@ public class CommunicationServiceImpl implements CommunicationService {
     }
     public List<Communication> getCommunicationbyIdEns(int IdEns){return c.getCommunicationbyIdEns(IdEns);}
 
+    public void supprCommunication(int id_com){c.supprCommunication(id_com);}
+
+    public void UpdateCommunication(Communication com){c.UpdateCommunication(com);}
+
 }

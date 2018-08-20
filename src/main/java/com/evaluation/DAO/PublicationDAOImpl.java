@@ -38,13 +38,30 @@ public class PublicationDAOImpl implements PublicationDAO {
         }
     }
 
+    public void UpdatePublication(Publication pub) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        if(pub!=null){
+            try {
+                session.update(pub);
+                tx.commit();
+                session.close();
+            } catch (Exception e) {
+                tx.rollback();
+                session.close();
+                e.printStackTrace();
+            }
+        }
+    }
+
+
     public List<Publication> getPublicationbyIdEns(int IdEns) {
         Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
         try {
             Query query = session.createQuery("FROM com.evaluation.models.Publication as pub  WHERE pub.code_ens =: IdE");
             query.setParameter("IdE", IdEns);
-            List<com.evaluation.models.Publication> list = query.list();
+            List<Publication> list = query.list();
             tx.commit();
             session.close();
             return list;
@@ -55,6 +72,27 @@ public class PublicationDAOImpl implements PublicationDAO {
             e.printStackTrace();
             List<Publication> list = null;
             return list;
+        }
+    }
+
+    public void supprPublication(int id_pub) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        try {
+            Query query = session.createQuery("FROM com.evaluation.models.Publication as ap  WHERE ap.id_pub =: IdE");
+            query.setParameter("IdE", id_pub);
+            List<Publication> list = query.list();
+            for (Publication a: list){
+                session.delete(a);
+            }
+            tx.commit();
+            session.close();
+        }
+        catch (Exception e){
+            tx.rollback();
+            session.close();
+            e.printStackTrace();
+
         }
     }
 }

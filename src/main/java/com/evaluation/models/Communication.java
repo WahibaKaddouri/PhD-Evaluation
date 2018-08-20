@@ -49,6 +49,18 @@ public class Communication {
         this.url = url;
     }
 
+    public Communication(int id_com, int code_ens, String type, String titre_com, String position_auteur, String titre_manif, int annee, String url) {
+        this.id_com=id_com;
+        this.code_ens = code_ens;
+        this.type = type;
+        this.titre_com = titre_com;
+        this.position_auteur = position_auteur;
+        this.titre_manif = titre_manif;
+        this.annee = annee;
+        this.url = url;
+    }
+
+
     public int getId_com() {
         return id_com;
     }

@@ -26,4 +26,8 @@ public class ResponsabilitéServiceImpl implements ResponsabilitéService {
     }
     public List<Responsabilité> getResponsabilitebyIdEns(int IdEns){return r.getResponsabilitebyIdEns(IdEns);}
 
+    public void supprResponsabilité(int id_resp){r.supprResponsabilité(id_resp);}
+
+    public void UpdateResponsabilité(Responsabilité resp){r.UpdateResponsabilité(resp);}
+
 }

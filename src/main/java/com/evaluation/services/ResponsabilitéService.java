@@ -9,5 +9,7 @@ public interface ResponsabilitéService {
 
     public void saveResponsabilité(Responsabilité resp);
     public List<Responsabilité> getResponsabilitebyIdEns(int IdEns);
+    public void supprResponsabilité(int id_resp);
+    public void UpdateResponsabilité(Responsabilité resp);
 
 }

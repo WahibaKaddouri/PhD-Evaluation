@@ -25,4 +25,7 @@ public class ObservationServiceImpl implements ObservationService {
 
     }
 
+    public List<Observation> getListObservation(){return obs.getListObservation();}
+    public Observation getObservationById(int enseignant){return obs.getObservationById(enseignant);}
+
 }

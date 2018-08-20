@@ -38,6 +38,22 @@ public class ResponsabilitéDAOImpl implements ResponsabilitéDAO {
         }
     }
 
+    public void UpdateResponsabilité(Responsabilité resp) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        if(resp!=null){
+            try {
+                session.update(resp);
+                tx.commit();
+                session.close();
+            } catch (Exception e) {
+                tx.rollback();
+                session.close();
+                e.printStackTrace();
+            }
+        }
+    }
+
     public List<Responsabilité> getResponsabilitebyIdEns(int IdEns) {
         Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
@@ -56,6 +72,28 @@ public class ResponsabilitéDAOImpl implements ResponsabilitéDAO {
             e.printStackTrace();
             List<Responsabilité> list = null;
             return list;
+        }
+    }
+
+
+    public void supprResponsabilité(int id_resp) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        try {
+            Query query = session.createQuery("FROM com.evaluation.models.Responsabilité as ap  WHERE ap.id_resp =: IdE");
+            query.setParameter("IdE", id_resp);
+            List<Responsabilité> list = query.list();
+            for (Responsabilité a: list){
+                session.delete(a);
+            }
+            tx.commit();
+            session.close();
+        }
+        catch (Exception e){
+            tx.rollback();
+            session.close();
+            e.printStackTrace();
+
         }
     }
 }

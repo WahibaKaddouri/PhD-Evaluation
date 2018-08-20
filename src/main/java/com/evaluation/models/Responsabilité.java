@@ -38,6 +38,16 @@ public class Responsabilité {
         this.structure = structure;
     }
 
+    public Responsabilité(int id_resp, int code_ens, String type, int annee_deb, int annee_fin, String structure) {
+        this.id_resp=id_resp;
+        this.code_ens = code_ens;
+        this.type = type;
+        this.annee_deb = annee_deb;
+        this.annee_fin = annee_fin;
+        this.structure = structure;
+    }
+
+
     public int getId_resp() {
         return id_resp;
     }

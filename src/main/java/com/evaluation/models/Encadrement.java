@@ -41,6 +41,16 @@ public class Encadrement {
         this.date_soutenance = date_soutenance;
     }
 
+
+    public Encadrement(int id_enc, int code_ens, String type, String candidat, String titre, String date_soutenance) {
+        this.id_enc=id_enc;
+        this.code_ens = code_ens;
+        this.type = type;
+        this.candidat = candidat;
+        this.titre = titre;
+        this.date_soutenance = date_soutenance;
+    }
+
     public int getId_enc() {
         return id_enc;
     }

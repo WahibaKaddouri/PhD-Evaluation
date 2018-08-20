@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface SectionDAO {
 
-     List<Section> getAllSection() ;
+     List<Section> getAllSection();
+     int getSectionId(String section);
 }
